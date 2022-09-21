@@ -1,0 +1,26 @@
+http:
+  middlewares:
+    restrict_access:
+      headers:
+        accessControlAllowOriginList:
+          - "*"
+        accessControlMaxAge: 3600
+        accessControlExposeHeaders:
+          - "Content-Type"
+        addVaryHeader: true
+  routers:
+    haqq_api:
+      entryPoints:
+        - websecure
+      service: haqq_api
+      middlewares:
+        - restrict_access
+      rule: Host(`haqq-t.api.crouton.digital`)
+      tls:
+        certResolver: letsencrypt
+  services:
+    haqq_api:
+      loadBalancer:
+        servers:
+          - url: "http://167.235.251.172:1317"
+        passHostHeader: true

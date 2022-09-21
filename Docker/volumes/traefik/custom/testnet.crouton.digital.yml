@@ -1,0 +1,15 @@
+http:
+  routers:
+    testnet_haqq:
+      entryPoints:
+        - websecure
+      service: testnet_haqq
+      rule: Host(`testnet.crouton.digital`)
+      tls:
+        certResolver: letsencrypt
+  services:
+    testnet_haqq:
+      loadBalancer:
+        servers:
+          - url: "http://exploer:80"
+        passHostHeader: true

@@ -1,0 +1,21 @@
+---
+version: "3.9"
+services:
+  traefik:
+    image: traefik:latest
+    restart: always
+    hostname: traefik
+    container_name: traefik
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./volumes/traefik:/etc/traefik
+  exploer:
+    container_name: exploer
+    image: croutondigital/ping-pug:v2.0.0-beta
+    #    ports:
+    #    - "80:80"
+    restart: unless-stopped

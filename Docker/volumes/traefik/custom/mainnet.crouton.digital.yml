@@ -1,0 +1,15 @@
+http:
+  routers:
+    mainnet_haqq:
+      entryPoints:
+        - websecure
+      service: mainnet_haqq
+      rule: Host(`mainnet.crouton.digital`)
+      tls:
+        certResolver: letsencrypt
+  services:
+    mainnet_haqq:
+      loadBalancer:
+        servers:
+          - url: "http://exploer:80"
+        passHostHeader: true

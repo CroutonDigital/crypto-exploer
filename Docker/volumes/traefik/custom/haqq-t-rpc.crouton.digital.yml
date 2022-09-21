@@ -1,0 +1,26 @@
+http:
+  middlewares:
+    restrict_rpc_access:
+      headers:
+        accessControlAllowOriginList:
+          - "*"
+        accessControlMaxAge: 3600
+        accessControlExposeHeaders:
+          - "Content-Type"
+        addVaryHeader: true
+  routers:
+    haqq_rpc:
+      entryPoints:
+        - websecure
+      service: haqq_rpc
+      middlewares:
+        - restrict_rpc_access
+      rule: Host(`haqq-t-rpc.crouton.digital`)
+      tls:
+        certResolver: letsencrypt
+  services:
+    haqq_rpc:
+      loadBalancer:
+        servers:
+          - url: "http://167.235.251.172:26657"
+        passHostHeader: true
